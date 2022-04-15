@@ -211,11 +211,10 @@ while running:
         all_sprites.add(player)
         all_sprites.add(player2)
 
-# =============================================================================
-#         for i in range(8):
-#            new_mob()
-# =============================================================================
-        
+#meteor rain kill
+    for i in range(8):
+        new_mob()
+         
     # keep loop running at the right speed
     clock.tick(FPS)
     # Process input (events)
