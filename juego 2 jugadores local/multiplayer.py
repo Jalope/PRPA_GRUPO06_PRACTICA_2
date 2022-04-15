@@ -73,14 +73,20 @@ def show_go_screen(winner):
                 waiting = False
                 
 class Player(pg.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, side):
+        self.side = side
         pg.sprite.Sprite.__init__(self)
         self.image = pg.transform.scale(player_img, (50, 38))
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.radius = 21
         #pg.draw.circle(self.image, RED, self.rect.center, self.radius)
-        self.rect.centerx = 20
+        
+        if self.side == 1:
+            self.rect.centerx = 20
+        else: 
+            self.rect.centerx = WIDTH - 20
+            
         self.rect.bottom = HEIGHT/2
         self.speedy = 0
         self.live = 3
@@ -88,51 +94,33 @@ class Player(pg.sprite.Sprite):
     def update(self):
         self.speedy = 0
         keystate = pg.key.get_pressed()
-        if keystate[pg.K_UP]:
-            self.speedy = -8
-        if keystate[pg.K_DOWN]:
-            self.speedy = 8
-        self.rect.y += self.speedy
-        if self.rect.bottom >= HEIGHT:
-            self.rect.bottom = HEIGHT
-        if self.rect.top < 0:
-            self.rect.top = 0
+        if self.side == 1: 
+            if keystate[pg.K_UP]:
+                self.speedy = -8
+            if keystate[pg.K_DOWN]:
+                self.speedy = 8
+                self.rect.y += self.speedy
+            if self.rect.bottom >= HEIGHT:
+                self.rect.bottom = HEIGHT
+            if self.rect.top < 0:
+                self.rect.top = 0
+        else: 
+            if keystate[pg.K_w]:
+                self.speedy = -8
+            if keystate[pg.K_s]:
+                self.speedy = 8
+                self.rect.y += self.speedy
+            if self.rect.bottom >= HEIGHT:
+                self.rect.bottom = HEIGHT
+            if self.rect.top < 0:
+                self.rect.top = 0
         
     def shoot(self):
         bullet = Bullet(self.rect.centerx, self.rect.top, 1)
         all_sprites.add(bullet)
         bullets.add(bullet)
 
-class Player2(pg.sprite.Sprite):
-    def __init__(self):
-        pg.sprite.Sprite.__init__(self)
-        self.image = pg.transform.scale(player2_img, (50, 38))
-        self.image.set_colorkey(BLACK)
-        self.rect = self.image.get_rect()
-        self.radius = 21
-        #pg.draw.circle(self.image, RED, self.rect.center, self.radius)
-        self.rect.centerx = WIDTH-20
-        self.rect.bottom = HEIGHT/2
-        self.speedy = 0
-        self.live = 3
 
-    def update(self):
-        self.speedy = 0
-        keystate = pg.key.get_pressed()
-        if keystate[pg.K_w]:
-            self.speedy = -8
-        if keystate[pg.K_s]:
-            self.speedy = 8
-        self.rect.y += self.speedy
-        if self.rect.bottom >= HEIGHT:
-            self.rect.bottom = HEIGHT
-        if self.rect.top < 0:
-            self.rect.top = 0
-        
-    def shoot(self):
-        bullet = Bullet(self.rect.centerx, self.rect.top, 2)
-        all_sprites.add(bullet)
-        bullets.add(bullet)
     
 class Mob(pg.sprite.Sprite):
     def __init__(self):
@@ -206,14 +194,14 @@ while running:
         all_sprites = pg.sprite.Group()
         mobs = pg.sprite.Group()
         bullets = pg.sprite.Group()
-        player = Player()
-        player2 = Player2()
+        player = Player(1)
+        player2 = Player(2)
         all_sprites.add(player)
         all_sprites.add(player2)
 
 #meteor rain kill
-    for i in range(2):
-        new_mob()
+#    for i in range(2):
+#        new_mob()
          
     # keep loop running at the right speed
     clock.tick(FPS)
@@ -230,11 +218,11 @@ while running:
     # Update
     all_sprites.update()
 # =============================================================================
-#     #check if any bullet hit any mob
-    hits = pg.sprite.groupcollide(mobs, bullets, True, True)
-    for hit in hits:
-        score += 1
-        new_mob()
+##     #check if any bullet hit any mob
+#    hits = pg.sprite.groupcollide(mobs, bullets, True, True)
+#    for hit in hits:
+#        score += 1
+#        new_mob()
 # =============================================================================
     #check to see if a mob hit the player
     hits = pg.sprite.spritecollide(player, mobs, True, pg.sprite.collide_circle)
