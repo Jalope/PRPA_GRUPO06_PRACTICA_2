@@ -76,7 +76,10 @@ class Player(pg.sprite.Sprite):
     def __init__(self, side):
         self.side = side
         pg.sprite.Sprite.__init__(self)
-        self.image = pg.transform.scale(player_img, (50, 38))
+        if self.side == 1:        
+        	self.image = pg.transform.scale(player_img, (50, 38))
+        else:
+        	self.image = pg.transform.scale(player2_img, (50,38))
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.radius = 21
