@@ -212,7 +212,7 @@ while running:
         all_sprites.add(player2)
 
 #meteor rain kill
-    for i in range(8):
+    for i in range(2):
         new_mob()
          
     # keep loop running at the right speed
@@ -239,8 +239,8 @@ while running:
     #check to see if a mob hit the player
     hits = pg.sprite.spritecollide(player, mobs, True, pg.sprite.collide_circle)
     for hit in hits:
-        player.live -= 1
-        new_mob()
+        #player.live -= 1
+        #new_mob()
         if player.live <= 0:
             game_over = True	
     hits = pg.sprite.spritecollide(player, bullets, True)
