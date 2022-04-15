@@ -231,10 +231,10 @@ while running:
     all_sprites.update()
 # =============================================================================
 #     #check if any bullet hit any mob
-#     hits = pg.sprite.groupcollide(mobs, bullets, True, True)
-#     for hit in hits:
-#         score += 1
-#         new_mob()
+    hits = pg.sprite.groupcollide(mobs, bullets, True, True)
+    for hit in hits:
+        score += 1
+        new_mob()
 # =============================================================================
     #check to see if a mob hit the player
     hits = pg.sprite.spritecollide(player, mobs, True, pg.sprite.collide_circle)
