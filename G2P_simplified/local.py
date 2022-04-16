@@ -14,25 +14,18 @@ SCREEN_HEIGHT = 600
 
 FPS = 60 
 
-class Laser1(pygame.sprite.Sprite):
-    def __init__(self):
+class Laser(pygame.sprite.Sprite):
+    def __init__(self, direction):
         super().__init__()
+        self.direction = direction
         self.image = pygame.image.load("laser.png").convert()
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
 
     def update(self): 
-        self.rect.y -= 5 
+        self.rect.y += self.direction 
 
-class Laser2(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.image = pygame.image.load("laser.png").convert()
-        self.image.set_colorkey(BLACK)
-        self.rect = self.image.get_rect()
 
-    def update(self): 
-        self.rect.y += 5 
 
 class Meteor(pygame.sprite.Sprite):
     def __init__(self):
@@ -41,12 +34,13 @@ class Meteor(pygame.sprite.Sprite):
         self.image.set_colorkey(BLACK) 
         self.rect = self.image.get_rect()
 
-class Player1(pygame.sprite.Sprite):
-    def __init__(self):
+class Player(pygame.sprite.Sprite):
+    def __init__(self, side, imagE):
         super().__init__()
-        self.image = pygame.image.load("player1.png").convert()
+        self.side = side
+        self.image = pygame.image.load(imagE).convert()
         self.image.set_colorkey(BLACK) 
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect() #(x,y)
         self.speed_x = 0
         self.speed_y = 0
 
@@ -57,25 +51,7 @@ class Player1(pygame.sprite.Sprite):
     #encapsulamos 
     def update(self): 
         self.rect.x += self.speed_x
-        player1.rect.y = 510
-
-class Player2(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.image = pygame.image.load("player2.png").convert()
-        self.image.set_colorkey(BLACK) 
-        self.rect = self.image.get_rect()
-        self.speed_x = 0
-        self.speed_y = 0
-
-    #le pasamos el parametro x que representa la velocidad
-    def changespeed(self, x): 
-        self.speed_x += x
-    
-    #encapsulamos 
-    def update(self): 
-        self.rect.x += self.speed_x
-        palyer2.rect.y = 0
+        self.rect.y = self.side
 
 
 class Game(object):
@@ -97,11 +73,11 @@ class Game(object):
             self.meteor_list.add(meteor)
             self.all_sprite_list.add(meteor)
 
-        self.player1 = Player1()
+        self.player1 = Player(510, "player1.png")
         self.player_list.add(self.player1)
         self.all_sprite_list.add(self.player1)
 
-        self.player2 = Player2()        
+        self.player2 = Player(0, "player2.png")        
         self.player_list.add(self.player2)
         self.all_sprite_list.add(self.player2)
 
@@ -126,10 +102,10 @@ class Game(object):
                 if event.key == pygame.K_RIGHT:
                     self.player1.changespeed(-3)
 
-        #cada vez que pulso sale un laser 
+        #cada vez que pulso sale un laser de P1
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE: 
-                    laser = Laser1()
+                    laser = Laser(-5)
                     laser.rect.x = self.player1.rect.x + 45
                     laser.rect.y = self.player1.rect.y - 20
                 
@@ -152,10 +128,10 @@ class Game(object):
                 if event.key == pygame.K_d:
                     self.player2.changespeed(-3)
 
-        #cada vez que pulso sale un laser 
+        #cada vez que pulso sale un laser de P2
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w: 
-                    laser = Laser2()
+                    laser = Laser(5)
                     laser.rect.x = self.player2.rect.x + 45
                     laser.rect.y = self.player2.rect.y + 65
                 
@@ -169,7 +145,7 @@ class Game(object):
         return True
     
     def run_logic(self): 
-        if self.game_over: 
+        if not self.game_over: 
             self.all_sprite_list.update()
 
         for laser in self.laser_list1: 
@@ -189,15 +165,16 @@ class Game(object):
             for meteor in meteor_hit_list: 
                 self.all_sprite_list.remove(laser)
                 self.laser_list2.remove(laser)
-                score +=1 
-                print(score)
+                #score +=1 
+                #print(score)
         
-            if laser.rect.y < -10: 
+        if laser.rect.y < -10: 
                 self.all_sprite_list.remove(laser)
                 self.laser_list2.remove(laser)
 
+
         for laser in self.laser_list1: 
-            if pygame.sprite.collide_rect(laser, self.player2):
+            if pygame.sprite.collide_rect(self.player_list, laser, True):
                 self.all_sprite_list.remove(self.player2)
                 self.laser_list1.remove(laser)
         
@@ -228,11 +205,12 @@ class Game(object):
             self.all_sprite_list.draw(screen)
 
         self.all_sprite_list.draw(screen)
+     
         pygame.display.flip()
 
 def main(): 
 
-    pygame.init()
+    pygame.init()  
 
     screen = pygame.display.set_mode([WIDTH, HEIGHT])
     clock = pygame.time.Clock()
@@ -242,7 +220,7 @@ def main():
 
     while running: 
         running = game.process_events()
-        game.run_logic
+        game.run_logic()
         game.display_frame(screen)
         clock.tick(60)
     pygame.quit()
