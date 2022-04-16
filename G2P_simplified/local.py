@@ -26,14 +26,6 @@ class Laser(pygame.sprite.Sprite):
         self.rect.y += self.direction
 
 
-
-#class Meteor(pygame.sprite.Sprite):
-#    def __init__(self):
-#        super().__init__()
-#        self.image = pygame.image.load("meteor.png").convert()
-#        self.image.set_colorkey(BLACK) 
-#        self.rect = self.image.get_rect()
-
 class Player(pygame.sprite.Sprite):
     def __init__(self, side, imagE):
         super().__init__()
@@ -64,19 +56,10 @@ class Game(object):
         self.score_P2 = 0
         self.game_over = False
         self.all_sprite_list = pygame.sprite.Group()
-        self.meteor_list = pygame.sprite.Group()
         self.laser_list1 = pygame.sprite.Group()
         self.laser_list2 = pygame.sprite.Group()
         self.player_list = pygame.sprite.Group()
         self.win_player = 0
-
-#        for i in range(50): 
-  #          meteor = Meteor()
-  #          meteor.rect.x = random.randrange(900 - 30)
-  #          meteor.rect.y = random.randrange(100, 400)
-
-  #          self.meteor_list.add(meteor)
-  #          self.all_sprite_list.add(meteor)
 
         self.player1 = Player(510, "player1.png")
         self.player_list.add(self.player1)
@@ -154,24 +137,12 @@ class Game(object):
             self.all_sprite_list.update()
 
         for laser in self.laser_list1: 
-#           meteor_hit_list = pygame.sprite.spritecollide(laser, self.meteor_list, True)
-#           for meteor in meteor_hit_list: 
-#               self.all_sprite_list.remove(laser)
-#               self.laser_list1.remove(laser)
-               #score +=1 
-               #print(score)
-#       
+       
             if laser.rect.y > HEIGHT: 
                 self.all_sprite_list.remove(laser)
                 self.laser_list1.remove(laser)
     
         for laser in self.laser_list2: 
-#            meteor_hit_list = pygame.sprite.spritecollide(laser, self.meteor_list, True)
-#            for meteor in meteor_hit_list: 
-#                self.all_sprite_list.remove(laser)
-#                self.laser_list2.remove(laser)
-                #score +=1 
-                #print(score)
         
             if laser.rect.y < 0: 
                     self.all_sprite_list.remove(laser)
