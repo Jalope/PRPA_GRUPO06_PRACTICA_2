@@ -52,6 +52,10 @@ class Player(pygame.sprite.Sprite):
     def update(self): 
         self.rect.x += self.speed_x
         self.rect.y = self.side
+        if self.rect.right >= WIDTH:
+            self.rect.right = WIDTH
+        if self.rect.left <= 0:
+            self.rect.left = 0
 
 
 class Game(object):
@@ -157,7 +161,7 @@ class Game(object):
                 #score +=1 
                 #print(score)
         
-            if laser.rect.y < -10: 
+            if laser.rect.y > HEIGHT: 
                 self.all_sprite_list.remove(laser)
                 self.laser_list1.remove(laser)
     
@@ -169,7 +173,7 @@ class Game(object):
                 #score +=1 
                 #print(score)
         
-            if laser.rect.y < -10: 
+            if laser.rect.y < 0: 
                     self.all_sprite_list.remove(laser)
                     self.laser_list2.remove(laser)
 
