@@ -148,15 +148,6 @@ class Game(object):
                     self.all_sprite_list.remove(laser)
                     self.laser_list2.remove(laser)
 
-        for laser in self.laser_list1: 
-            if pygame.sprite.collide_rect(laser, self.player2):
-                self.win_player = 1
-                self.game_over = True
-
-        for laser in self.laser_list2: 
-            if pygame.sprite.collide_rect(laser, self.player1):
-                self.win_player = 2
-                self.game_over = True
 
         #colision del laser de la nave de abajo con la nave de arriba
         for laser in self.laser_list1: 
@@ -164,6 +155,7 @@ class Game(object):
             for player in player_hit_list: 
                 self.all_sprite_list.remove(laser)
                 self.laser_list1.remove(laser)
+                self.game_over = True
 
         #colision del laser de la nave de arriba con la nave de abajo
         for laser in self.laser_list2: 
@@ -171,6 +163,7 @@ class Game(object):
             for player in player_hit_list: 
                 self.all_sprite_list.remove(laser)
                 self.laser_list2.remove(laser)
+                self.game_over = True
 
         
 
