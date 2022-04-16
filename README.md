@@ -23,11 +23,9 @@ todas las acciones atómicas que puedan generar problemas.
 
 <b> Concurrencia </b><br>
 Implementaremos, como en el ejemplo que vimos en clase, un cliente/servidor de forma
-que el juego pueda usarse bajo los principios de la programación concurrente, por dos ju-
-gadores en la misma red. Para ello utilizaremos, de nuevo, la librería multiprocessing en
+que el juego pueda usarse bajo los principios de la programación concurrente, por dos jugadores en la misma red. Para ello utilizaremos, de nuevo, la librería multiprocessing en
 concreto de Listener y Client.
-Posteriormente, una vez alcanzado el objetivo de la práctica con cliente/servidor, intenta-
-remos hacer uso de la tecnología mqtt. Para ello haremos uso de paho.mqtt.publish como
+Posteriormente, una vez alcanzado el objetivo de la práctica con cliente/servidor, intenta remos hacer uso de la tecnología mqtt. Para ello haremos uso de paho.mqtt.publish como
 se ha visto en clase.
 <hr/>
 
