@@ -154,22 +154,22 @@ class Game(object):
             self.all_sprite_list.update()
 
         for laser in self.laser_list1: 
-            meteor_hit_list = pygame.sprite.spritecollide(laser, self.meteor_list, True)
-            for meteor in meteor_hit_list: 
-                self.all_sprite_list.remove(laser)
-                self.laser_list1.remove(laser)
-                #score +=1 
-                #print(score)
-        
+#           meteor_hit_list = pygame.sprite.spritecollide(laser, self.meteor_list, True)
+#           for meteor in meteor_hit_list: 
+#               self.all_sprite_list.remove(laser)
+#               self.laser_list1.remove(laser)
+               #score +=1 
+               #print(score)
+#       
             if laser.rect.y > HEIGHT: 
                 self.all_sprite_list.remove(laser)
                 self.laser_list1.remove(laser)
     
         for laser in self.laser_list2: 
-            meteor_hit_list = pygame.sprite.spritecollide(laser, self.meteor_list, True)
-            for meteor in meteor_hit_list: 
-                self.all_sprite_list.remove(laser)
-                self.laser_list2.remove(laser)
+#            meteor_hit_list = pygame.sprite.spritecollide(laser, self.meteor_list, True)
+#            for meteor in meteor_hit_list: 
+#                self.all_sprite_list.remove(laser)
+#                self.laser_list2.remove(laser)
                 #score +=1 
                 #print(score)
         
