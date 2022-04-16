@@ -169,7 +169,7 @@ class Game(object):
         return True
     
     def run_logic(self): 
-        if not self.game_over: 
+        if self.game_over: 
             self.all_sprite_list.update()
 
         for laser in self.laser_list1: 
