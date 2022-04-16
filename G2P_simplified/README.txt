@@ -1,0 +1,1 @@
+Debido a la complejidad del código, que habiamos implementado en la primera versión local del juego, hemos decidido llevar a cabo algunas simplificaciones. De este modo esperamos que sea más sencillo crear sala.py y player.py
