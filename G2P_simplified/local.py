@@ -27,12 +27,12 @@ class Laser(pygame.sprite.Sprite):
 
 
 
-class Meteor(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.image = pygame.image.load("meteor.png").convert()
-        self.image.set_colorkey(BLACK) 
-        self.rect = self.image.get_rect()
+#class Meteor(pygame.sprite.Sprite):
+#    def __init__(self):
+#        super().__init__()
+#        self.image = pygame.image.load("meteor.png").convert()
+#        self.image.set_colorkey(BLACK) 
+#        self.rect = self.image.get_rect()
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, side, imagE):
@@ -70,13 +70,13 @@ class Game(object):
         self.player_list = pygame.sprite.Group()
         self.win_player = 0
 
-        for i in range(50): 
-            meteor = Meteor()
-            meteor.rect.x = random.randrange(900 - 30)
-            meteor.rect.y = random.randrange(100, 400)
+#        for i in range(50): 
+  #          meteor = Meteor()
+  #          meteor.rect.x = random.randrange(900 - 30)
+  #          meteor.rect.y = random.randrange(100, 400)
 
-            self.meteor_list.add(meteor)
-            self.all_sprite_list.add(meteor)
+  #          self.meteor_list.add(meteor)
+  #          self.all_sprite_list.add(meteor)
 
         self.player1 = Player(510, "player1.png")
         self.player_list.add(self.player1)
