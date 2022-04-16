@@ -73,7 +73,7 @@ class Game(object):
         for i in range(50): 
             meteor = Meteor()
             meteor.rect.x = random.randrange(900 - 30)
-            meteor.rect.y = random.randrange(450)
+            meteor.rect.y = random.randrange(100, 400)
 
             self.meteor_list.add(meteor)
             self.all_sprite_list.add(meteor)
