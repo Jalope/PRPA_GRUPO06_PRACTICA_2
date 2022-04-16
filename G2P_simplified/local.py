@@ -23,7 +23,7 @@ class Laser(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
     def update(self): 
-        self.rect.y += self.direction 
+        self.rect.y += self.direction
 
 
 
@@ -64,6 +64,7 @@ class Game(object):
         self.laser_list1 = pygame.sprite.Group()
         self.laser_list2 = pygame.sprite.Group()
         self.player_list = pygame.sprite.Group()
+        self.win_player = 0
 
         for i in range(50): 
             meteor = Meteor()
@@ -107,7 +108,7 @@ class Game(object):
                 if event.key == pygame.K_SPACE: 
                     laser = Laser(-5)
                     laser.rect.x = self.player1.rect.x + 45
-                    laser.rect.y = self.player1.rect.y - 20
+                    laser.rect.y = self.player1.rect.y - 50
                 
                     self.laser_list1.add(laser)
                     self.all_sprite_list.add(laser)
@@ -133,7 +134,7 @@ class Game(object):
                 if event.key == pygame.K_w: 
                     laser = Laser(5)
                     laser.rect.x = self.player2.rect.x + 45
-                    laser.rect.y = self.player2.rect.y + 65
+                    laser.rect.y = self.player2.rect.y + 95
                 
                     self.laser_list2.add(laser)
                     self.all_sprite_list.add(laser)
@@ -172,24 +173,31 @@ class Game(object):
                     self.all_sprite_list.remove(laser)
                     self.laser_list2.remove(laser)
 
-
         for laser in self.laser_list1: 
-            if pygame.sprite.spritecollide(laser, self.player_list, True):
-                self.all_sprite_list.remove(self.player2)
-                self.laser_list1.remove(laser)
-        
-            if laser.rect.y < -10: 
-                self.all_sprite_list.remove(laser)
-                self.laser_list1.remove(laser)
+            if pygame.sprite.collide_rect(laser, self.player2):
+                self.win_player = 1
+                self.game_over = True
 
         for laser in self.laser_list2: 
             if pygame.sprite.collide_rect(laser, self.player1):
-                self.all_sprite_list.remove(self.player1)
-                self.laser_list2.remove(laser)
-         
-            if laser.rect.y < -10: 
+                self.win_player = 2
+                self.game_over = True
+
+        #colision del laser de la nave de abajo con la nave de arriba
+        for laser in self.laser_list1: 
+            player_hit_list = pygame.sprite.spritecollide(laser, self.player_list, True)
+            for player in player_hit_list: 
+                self.all_sprite_list.remove(laser)
+                self.laser_list1.remove(laser)
+
+        #colision del laser de la nave de arriba con la nave de abajo
+        for laser in self.laser_list2: 
+            player_hit_list = pygame.sprite.spritecollide(laser, self.player_list, True)
+            for player in player_hit_list: 
                 self.all_sprite_list.remove(laser)
                 self.laser_list2.remove(laser)
+
+        
 
     def display_frame(self, screen): 
         screen.fill(WHITE)
@@ -197,7 +205,16 @@ class Game(object):
          #texto para game over 
         if self.game_over: 
             font = pygame.font.SysFont("serif", 25) #Fuente
-            text = font.render("Game Over! Click to continue", True, BLACK) #Texto 
+            #Texto 
+            if self.win_player == 1: 
+                for sprite in self.all_sprite_list: 
+                    self.all_sprite_list.remove(sprite)
+                text = font.render("Game Over! The player 1 WIN!! Pres any key to continue!", True, BLACK)
+            else: 
+                for sprite in self.all_sprite_list: 
+                    self.all_sprite_list.remove(sprite)
+                text = font.render("Game Over! The player 2 WIN!! Click to continue", True, BLACK) 
+
             center_x = (SCREEN_WIDTH // 2) - (text.get_width() // 2) #posicion del texto
             center_y = (SCREEN_HEIGHT // 2) - (text.get_height() // 2)
             screen.blit(text, [center_x, center_y]) #imprimirlo en la ventana del juego
