@@ -168,13 +168,13 @@ class Game(object):
                 #score +=1 
                 #print(score)
         
-        if laser.rect.y < -10: 
-                self.all_sprite_list.remove(laser)
-                self.laser_list2.remove(laser)
+            if laser.rect.y < -10: 
+                    self.all_sprite_list.remove(laser)
+                    self.laser_list2.remove(laser)
 
 
         for laser in self.laser_list1: 
-            if pygame.sprite.collide_rect(self.player_list, laser, True):
+            if pygame.sprite.spritecollide(laser, self.player_list, True):
                 self.all_sprite_list.remove(self.player2)
                 self.laser_list1.remove(laser)
         
