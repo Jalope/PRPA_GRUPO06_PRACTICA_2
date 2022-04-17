@@ -1,1 +1,1 @@
-Debido a la complejidad del código que habíamos implementado en la primera versión local del juego, hemos decidido llevar a cabo algunas simplificaciones. De este modo esperamos que sea más sencillo crear el cliente y el servidor.
+Debido a la complejidad del código que habíamos implementado en la primera versión local del juego, hemos decidido llevar a cabo algunas simplificaciones. De este modo esperamos que sea más sencillo crear el cliente y el servidor
