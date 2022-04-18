@@ -1,0 +1,1 @@
+Esta carpeta está dedicada a las diferentes versiones que vamos a implementar. Estas versiones son una simplificación de la parte visual y lógica del juego, con el fin de poder compartir las cosas entre los diferentes jugadores.
