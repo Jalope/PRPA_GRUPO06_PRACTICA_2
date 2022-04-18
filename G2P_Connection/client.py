@@ -1,22 +1,26 @@
 import pygame as pg
 from network import Network
 
+FPS = 60
 
-width = 900
-height = 600
-win = pg.display.set_mode((width,height))
+WIDTH = 900
+HEIGHT = 600
+
+WHITE = (255,255,255)
+
+screen = pg.display.set_mode((WIDTH,HEIGHT))
 pg.display.set_caption("Caption")
 
         
-def display(win, player1, player2):
-    win.fill((255,255,255))
-    player1.draw(win)
-    player2.draw(win)
+def display(screen, player1, player2):
+    screen.fill(WHITE)
+    player1.draw(screen)
+    player2.draw(screen)
      
     for b in player1.bullets:
-        b.draw(win)
+        b.draw(screen)
     for b in player2.bullets:
-        b.draw(win)
+        b.draw(screen)
     pg.display.update()
 
 def main():
@@ -27,7 +31,7 @@ def main():
     
     while running:
         all_sprites = pg.sprite.Group()       
-        clock.tick(60)
+        clock.tick(FPS)
         p2 = n.send(p)
         
         for event in pg.event.get():
@@ -40,7 +44,7 @@ def main():
                     all_sprites.add(b)
         p.move()
         all_sprites.update()           
-        display(win, p, p2)
+        display(screen, p, p2)
         
 if __name__ == "__main__":
     main()

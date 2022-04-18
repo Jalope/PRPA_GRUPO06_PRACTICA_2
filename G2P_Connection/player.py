@@ -1,5 +1,7 @@
 import pygame as pg
 
+GREEN = (0,255,0)
+
 class Player(pg.sprite.Sprite):
     def __init__(self, x, y, w, h, c):
         pg.sprite.Sprite.__init__(self)
@@ -12,8 +14,10 @@ class Player(pg.sprite.Sprite):
         self.speed = 3
         self.bullets = pg.sprite.Group()
     
-    def draw(self, win):
-        pg.draw.rect(win, self.color, self.rect)
+    def draw(self, screen):
+        pg.draw.rect(screen, self.color, self.rect)
+        for b in self.bullets: #???
+            b.draw(screen)
     
     def move(self):
         keys = pg.key.get_pressed()
@@ -40,12 +44,12 @@ class Bullet(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
-        self.color = (0,255,0)
+        self.color = GREEN
         self.rect = (x,y,10,20)
         self.speed = -3
         
-    def draw(self, win):
-        pg.draw.rect(win, self.color, self.rect)
+    def draw(self, screen):
+        pg.draw.rect(screen, self.color, self.rect)
 
     def update(self):
         self.y += self.speed
