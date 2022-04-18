@@ -38,6 +38,8 @@ class Player(pg.sprite.Sprite):
     def update(self):
         self.rect = (self.x, self.y, self.width, self.height)
         self.bullets.update()
+        for b in self.bullets:
+        	b.update()
             
 class Bullet(pg.sprite.Sprite):
     def __init__(self, x, y):
