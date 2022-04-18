@@ -2,7 +2,7 @@ import socket
 import _thread as th
 import sys
 import pickle
-from simpgame import Player
+from player import Player, Bullet
 
 
 
@@ -19,13 +19,16 @@ except socket.error as e:
 s.listen(2)#max conections
 print("Server started. Waiting for connection")
 
+players = [Player(0,0,50,50,(255,0,0)), Player(0,550,50,50,(0,0,0))]
 
-def t_client(conn):
+
+def t_client(conn, player):
+    conn.send(pickle.dumps(players[player]))
     reply = ""
     while True:
         try:
-            data = conn.recv(2408)
-            reply = data.decode("utf-8")
+            data = pickle.loads(conn.recv(2048))
+            players[player] = data
             if not data:
                 print("Disconnected")
                 break
@@ -34,9 +37,9 @@ def t_client(conn):
                     reply = players[0]
                 else:
                     reply = players[1]
-                print("Received: ", reply)
-                print("Sending: ", reply)
-            conn.sendall(str.encode(replay))
+                
+            
+            conn.sendall(pickle.dumps(reply))
         except:
             break
     print("Lost connection")
@@ -46,5 +49,5 @@ current_player = 0
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
-    th.start_new_thread(t_client, (conn,))
+    th.start_new_thread(t_client, (conn, current_player))
     current_player += 1
