@@ -4,7 +4,8 @@ import sys
 import pickle
 from player import Player, Bullet
 
-
+P_COLOR1 = (5,123,219)
+P_COLOR2 =  (0,0,0)
 
 server = "127.0.0.1"
 port = 5555
@@ -19,7 +20,7 @@ except socket.error as e:
 s.listen(2)#max conections
 print("Server started. Waiting for connection")
 
-players = [Player(0,0,50,50,(255,0,0)), Player(0,550,50,50,(0,0,0))]
+players = [Player(0,0,50,50,P_COLOR1), Player(0,550,50,50,P_COLOR2)]
 
 
 def t_client(conn, player):

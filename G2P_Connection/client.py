@@ -16,7 +16,8 @@ def display(screen, player1, player2):
     screen.fill(WHITE)
     player1.draw(screen)
     player2.draw(screen)
-     
+    pg.display.update()
+    
     for b in player1.bullets:
         b.draw(screen)
     for b in player2.bullets:
@@ -30,7 +31,8 @@ def main():
     clock = pg.time.Clock()
     
     while running:
-        all_sprites = pg.sprite.Group()       
+        
+        #all_sprites = pg.sprite.Group()       
         clock.tick(FPS)
         p2 = n.send(p)
         
@@ -41,9 +43,11 @@ def main():
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_SPACE:
                     b=p.shoot()
-                    all_sprites.add(b)
+                    #all_sprites.add(b)
         p.move()
-        all_sprites.update()           
+        #all_sprites.update()
+        
+        
         display(screen, p, p2)
         
 if __name__ == "__main__":

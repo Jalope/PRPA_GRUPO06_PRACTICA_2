@@ -14,19 +14,17 @@ class Player(pg.sprite.Sprite):
         self.speed = 3
         self.bullets = pg.sprite.Group()
     
-    def draw(self, screen):
-        pg.draw.rect(screen, self.color, self.rect)
-        for b in self.bullets: #???
-            b.draw(screen)
+    def draw(self, win):
+        pg.draw.rect(win, self.color, self.rect)
+        for b in self.bullets:
+            b.draw(win)
     
     def move(self):
         keys = pg.key.get_pressed()
-        
         if keys[pg.K_LEFT]:
             self.x -= self.speed
         if keys[pg.K_RIGHT]:
             self.x += self.speed
-        
         
         self.update()
         
@@ -39,19 +37,36 @@ class Player(pg.sprite.Sprite):
         self.rect = (self.x, self.y, self.width, self.height)
         self.bullets.update()
         for b in self.bullets:
-        	b.update()
+            b.update()
+        
             
 class Bullet(pg.sprite.Sprite):
     def __init__(self, x, y):
         pg.sprite.Sprite.__init__(self)
-        self.x = x
-        self.y = y
-        self.color = GREEN
+        if y == 550: 
+            self.side = 1
+        else:
+            self.side = 0
+        self.x = x+20
+        if self.side == 1:
+            self.y = y-26
+        else:
+            self.y = y+51
+        self.color = GREEN 
         self.rect = (x,y,10,20)
         self.speed = -3
         
-    def draw(self, screen):
-        pg.draw.rect(screen, self.color, self.rect)
+        
+    def draw(self, win):
+        pg.draw.rect(win, self.color, self.rect)
 
     def update(self):
-        self.y += self.speed
+        if self.side == 1:
+            self.y += self.speed
+        else:
+            self.y -= self.speed
+        if self.y > 580:
+            self.kill()
+        if self.y < 1:
+            self.kill()
+        self.rect = (self.x, self.y, 10, 20)
