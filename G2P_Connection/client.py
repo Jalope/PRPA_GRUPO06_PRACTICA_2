@@ -25,7 +25,7 @@ def display(screen, player1, player2):
     screen.fill(WHITE)
     player1.draw(screen)
     player2.draw(screen)
-	draw_text(screen, f'score: ({player2.score},{player1.score})', width/2, height/2)
+    draw_text(screen, f'score: ({player2.score},{player1.score})', 15, WIDTH/2, HEIGHT/2)
     pg.display.update()
     
 def main():

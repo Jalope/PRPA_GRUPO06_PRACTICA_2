@@ -14,11 +14,11 @@ class Player(pg.sprite.Sprite):
         self.rect = (x,y,w,h)
         self.speed = 3
         self.bullets = pg.sprite.Group()
-		self.hitbox = (x,y,w,h)
+        
 
     def draw(self, win):
         pg.draw.rect(win, self.color, self.rect)
-        pg.draw.rect(win, GREEN, self.rect,2)
+        pg.draw.rect(win, GREEN, self.rect,2) #hitbox
         for b in self.bullets:
             b.draw(win)
     
@@ -56,7 +56,7 @@ class Bullet(pg.sprite.Sprite):
             self.y = y+51
         self.color = GREEN 
         self.rect = (x,y,10,20)
-        self.speed = -3
+        self.speed = -4
         
         
     def draw(self, win):
