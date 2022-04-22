@@ -13,10 +13,11 @@ class Player(pg.sprite.Sprite):
         self.rect = (x,y,w,h)
         self.speed = 3
         self.bullets = pg.sprite.Group()
-    
+
+
     def draw(self, win):
         pg.draw.rect(win, self.color, self.rect)
-        pg.dra.rect(win, GREEN, self.rect,2)
+        pg.draw.rect(win, GREEN, self.rect,2)
         for b in self.bullets:
             b.draw(win)
     
