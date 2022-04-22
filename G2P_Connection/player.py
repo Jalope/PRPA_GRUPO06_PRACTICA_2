@@ -16,6 +16,7 @@ class Player(pg.sprite.Sprite):
     
     def draw(self, win):
         pg.draw.rect(win, self.color, self.rect)
+        pg.dra.rect(win, GREEN, self.rect,2)
         for b in self.bullets:
             b.draw(win)
     
