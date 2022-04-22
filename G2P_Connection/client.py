@@ -3,7 +3,7 @@ from network import Network
 
 FPS = 60
 
-WIDTH = 900
+WIDTH = 300
 HEIGHT = 600
 
 WHITE = (255,255,255)
@@ -27,7 +27,14 @@ def display(screen, player1, player2):
     player2.draw(screen)
     draw_text(screen, f'score: ({player2.score},{player1.score})', 15, WIDTH/2, HEIGHT/2)
     pg.display.update()
-    
+
+def hit(value,b,p2):#sustituye al método sprite.collide. Adjuntamos una imagen de la deducción de las ecuaciones
+    hit = False
+    if b.y-20*value < p2.rect[1] + p2.rect[3] and b.y+20> p2.rect[1]: #coord x
+        if b.x+10 > p2.rect[0] and b.x-10*value< p2.rect[0] + p2.rect[2]: #coord y
+            hit = True
+    return hit
+
 def main():
     running = True
     n = Network()
@@ -36,7 +43,6 @@ def main():
     
     while running:
         
-        #all_sprites = pg.sprite.Group()       
         clock.tick(FPS)
         p2 = n.send(p)
         
@@ -47,11 +53,16 @@ def main():
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_SPACE:
                     b=p.shoot()
-                    #all_sprites.add(b)
+        for b in p.bullets:
+            if p.y == 0:
+                if hit(1,b,p2):
+                    p.score += 1
+                    b.kill()
+            else:
+                if hit(0,b,p2):
+                    p.score += 1
+                    b.kill()
         p.move()
-        #all_sprites.update()
-        
-        
         display(screen, p, p2)
         
 if __name__ == "__main__":

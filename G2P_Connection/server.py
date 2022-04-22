@@ -2,10 +2,8 @@ import socket
 import _thread as th
 import sys
 import pickle
-from player import Player, Bullet
+from game import Player, Bullet, Game
 
-P_COLOR1 = (5,123,219)
-P_COLOR2 =  (0,0,0)
 
 server = "127.0.0.1"
 port = 5555
@@ -17,38 +15,57 @@ try:
 except socket.error as e:
 	str(e)
 
-s.listen(2)#max conections
+s.listen()
 print("Server started. Waiting for connection")
 
-players = [Player(0,0,50,50,P_COLOR1), Player(0,550,50,50,P_COLOR2)]
+games = {}
+n_players = 0
 
-
-def t_client(conn, player):
-    conn.send(pickle.dumps(players[player]))
+def client(conn, addr, player, gameid):
+    global n_players
+    
+    conn.send(pickle.dumps(games[gameid].players[player]))
     reply = ""
     while True:
         try:
             data = pickle.loads(conn.recv(2048))
-            players[player] = data
-            if not data:
-                print("Disconnected")
-                break
-            else:
-                if player == 1:
-                    reply = players[0]
+            games[gameid].players[player] = data
+            if gameid in games:
+                game = games[gameid]
+                if not data:
+                    print("Disconnected")
+                    break
                 else:
-                    reply = players[1]
-                
+                    if player == 1:
+                        reply = games[gameid].players[0]
+                    else:
+                        reply = games[gameid].players[1]
+            else:
+                break                
             
             conn.sendall(pickle.dumps(reply))
         except:
             break
-    print("Lost connection")
+    
+    print(f'Lost connection {addr}')
+    try:
+        del games[gameid]
+        print(f'Deleted game {gameid}')
+    except:
+        pass
+    n_players -= 1
     conn.close()
 
-current_player = 0
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
-    th.start_new_thread(t_client, (conn, current_player))
-    current_player += 1
+    n_players += 1
+    n_game = (n_players-1)//2
+    p = 0
+    if n_players % 2 == 1:
+        print(f'Creating game {n_game}')
+        games[n_game] = Game(n_game)
+    else:
+        games[n_game].ready = True
+        p = 1 
+    th.start_new_thread(client, (conn, addr, p, n_game))

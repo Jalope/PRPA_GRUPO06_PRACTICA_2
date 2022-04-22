@@ -1,7 +1,23 @@
 import pygame as pg
 
-GREEN = (0,255,0)
+WIDTH = 300
+HEIGHT = 600
 
+GREEN = (0,255,0)
+P_COLOR1 = (5,123,219)
+P_COLOR2 =  (0,0,0)
+
+class Game():
+    def __init__(self, id):
+        self.id = id
+        self.players = [Player(0,0,50,50,P_COLOR1), Player(0,550,50,50,P_COLOR2)]
+        self.ready = False
+        self.p1_wins = False
+        self.p2_wins = False
+    
+    def connected(self):
+        return self.ready
+    
 class Player(pg.sprite.Sprite):
     def __init__(self, x, y, w, h, c):
         pg.sprite.Sprite.__init__(self)
@@ -38,10 +54,7 @@ class Player(pg.sprite.Sprite):
     def update(self):
         self.rect = (self.x, self.y, self.width, self.height)
         self.bullets.update()
-        for b in self.bullets:
-            b.update()
-        
-            
+                  
 class Bullet(pg.sprite.Sprite):
     def __init__(self, x, y):
         pg.sprite.Sprite.__init__(self)
@@ -57,8 +70,7 @@ class Bullet(pg.sprite.Sprite):
         self.color = GREEN 
         self.rect = (x,y,10,20)
         self.speed = -4
-        
-        
+             
     def draw(self, win):
         pg.draw.rect(win, self.color, self.rect)
 
@@ -67,7 +79,7 @@ class Bullet(pg.sprite.Sprite):
             self.y += self.speed
         else:
             self.y -= self.speed
-        if self.y > 580:
+        if self.y > HEIGHT-20:
             self.kill()
         if self.y < 1:
             self.kill()
