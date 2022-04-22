@@ -5,6 +5,7 @@ GREEN = (0,255,0)
 class Player(pg.sprite.Sprite):
     def __init__(self, x, y, w, h, c):
         pg.sprite.Sprite.__init__(self)
+        self.score = 0
         self.x = x
         self.y = y
         self.width = w
@@ -13,7 +14,7 @@ class Player(pg.sprite.Sprite):
         self.rect = (x,y,w,h)
         self.speed = 3
         self.bullets = pg.sprite.Group()
-
+		self.hitbox = (x,y,w,h)
 
     def draw(self, win):
         pg.draw.rect(win, self.color, self.rect)
@@ -33,7 +34,6 @@ class Player(pg.sprite.Sprite):
     def shoot(self):
         bullet = Bullet(self.x, self.y)
         self.bullets.add(bullet)
-        return bullet
     
     def update(self):
         self.rect = (self.x, self.y, self.width, self.height)
