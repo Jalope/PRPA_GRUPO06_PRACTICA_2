@@ -1,11 +1,13 @@
 import socket
-import _thread as th
+#import _thread as th
+from multiprocessing import Process, Manager, Lock, current_process
 import sys
 import pickle
 from game import Player, Bullet, Game
 
-
+#IP del que haga de servidor
 server = "127.0.0.1"
+#Puerto por defecto
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -30,6 +32,7 @@ def client(conn, addr, player, gameid):
         try:
             data = pickle.loads(conn.recv(2048))
             games[gameid].players[player] = data
+            print (f"process: {current_process().player}")
             if gameid in games:
                 game = games[gameid]
                 if not data:
@@ -56,6 +59,8 @@ def client(conn, addr, player, gameid):
     n_players -= 1
     conn.close()
 
+manager = Manager()
+
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
@@ -68,4 +73,5 @@ while True:
     else:
         games[n_game].ready = True
         p = 1 
-    th.start_new_thread(client, (conn, addr, p, n_game))
+    new_player = Process(target = client, args = (conn, addr, p, n_game))
+    new_player.start()
