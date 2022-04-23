@@ -35,3 +35,5 @@ se ha visto en clase.
   G2P_simplified --> Segunda intento de implementar la práctica. Simplificamos nuestro juego quitando algunas características, con el fin de que sea más sencillo generar los archivos sala.py y player.py. 
 
   G2P_Connection --> Esta carpeta está dedicada a las diferentes versiones que vamos a implementar. Estas versiones son una simplificación de la parte visual y lógica del juego, con el fin de poder compartir las cosas entre los diferentes jugadores.
+  
+  Collision_Formulas --> En ella se puede encontrar un pequeño esquema sobre cómo se han calculado las fórmulas de colisión sin hacer del método collide propio de pygame.
