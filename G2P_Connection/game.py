@@ -9,17 +9,15 @@ P_COLOR2 = (16,131,13)
 P_COLOR2B =  (0,255,0)
 
 class Game():
-    def __init__(self, id):
+    def __init__(self, id, manager):
         self.id = id
-        self.players = [Player(0,0,50,50,P_COLOR1), Player(0,550,50,50,P_COLOR2)]
-# =============================================================================
-#         self.ready = False
-#         self.p1_wins = False
-#         self.p2_wins = False
-#     
-#     def connected(self):
-#         return self.ready
-# =============================================================================
+        self.players = manager.list([Player(0,0,50,50,P_COLOR1), Player(0,550,50,50,P_COLOR2)])
+        self.ready = False
+        self.p1_wins = False
+        self.p2_wins = False
+    
+    def connected(self):
+        return self.ready
     
 class Player(pg.sprite.Sprite):
     def __init__(self, x, y, w, h, c):
@@ -38,6 +36,7 @@ class Player(pg.sprite.Sprite):
         self.speed = 3
         self.bullets = pg.sprite.Group()
         
+
     def draw(self, win):
         pg.draw.rect(win, self.color, self.rect)
         pg.draw.rect(win, self.colorb, self.rect,2) #hitbox
@@ -58,11 +57,11 @@ class Player(pg.sprite.Sprite):
         self.bullets.add(bullet)
     
     def update(self):
+        self.rect = (self.x, self.y, self.width, self.height)
         if self.x+self.width >= WIDTH:
             self.x = WIDTH-self.width
         if self.x <= 0:
             self.x = 0
-        self.rect = (self.x, self.y, self.width, self.height)
         self.bullets.update()
                   
 class Bullet(pg.sprite.Sprite):
@@ -78,7 +77,7 @@ class Bullet(pg.sprite.Sprite):
         if self.side == 1:
             self.y = y-26
         else:
-            self.y = y+51 
+            self.y = y+51
         self.rect = (x,y,10,20)
         self.speed = -4
              
