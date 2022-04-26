@@ -30,10 +30,10 @@ se ha visto en clase.
 <hr/>
 
 <b>CARPETAS</b><br>
-  juego_2_jugadores_local --> Primer intento para implementar la práctica. Se ha creado un juego de disparos entre dos naves con meteoritos que sirven para reguardarse del rival. Cada jugador tiene 3 vidas. Se generan pantallas de inicio y final. El juego continua una vez acabada cada partidia presionando cualquier tecla. 
+  juego_2_jugadores_local --> Primer intento para implementar la práctica. Se ha creado un juego de disparos entre dos naves con meteoritos que sirven para resguardarse del rival. Cada jugador tiene 3 vidas. Se generan pantallas de inicio y final. El juego continua una vez acabada cada partidia presionando cualquier tecla. 
   
-  G2P_simplified --> Segunda intento de implementar la práctica. Simplificamos nuestro juego quitando algunas características, con el fin de que sea más sencillo generar los archivos sala.py y player.py. 
+  G2P_simplified --> Segundo intento de implementar la práctica. Simplificamos nuestro juego quitando algunas características, con el fin de que sea más sencillo generar los archivos sala.py y player.py. 
 
-  G2P_Connection --> Esta carpeta está dedicada a las diferentes versiones que vamos a implementar. Estas versiones son una simplificación de la parte visual y lógica del juego, con el fin de poder compartir las cosas entre los diferentes jugadores.
+  <b> G2P_Connection </b> --> Versión final completamente funcional de forma distriubida. Esta versión se ha simplificado en su parte visual y lógica, con el fin de poder compartir las cosas entre los diferentes jugadores.
   
   Collision_Formulas --> En ella se puede encontrar un pequeño esquema sobre cómo se han calculado las fórmulas de colisión sin hacer del método collide propio de pygame.
